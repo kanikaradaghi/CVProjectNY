@@ -1,0 +1,110 @@
+﻿@model List<CVProject.Models.Repository.Entity.ProfileAndProject>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="display-4">Projekt:</h2>
+
+        <div class="row">
+            @foreach (var profileAndProject in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@profileAndProject.Projekt.Title</h5>
+                            <p class="card-text">@profileAndProject.Projekt.Description</p>
+                            <br>
+                            <p class="card-title">Skapare:</p>
+                            @if (profileAndProject.Skapare.ArInaktiverad)
+                            {
+                                <p class="card-text">Inaktiverad användare</p>
+                            }
+                            else
+                            {
+                                <p class="card-text">@profileAndProject.Skapare.Fornamn @profileAndProject.Skapare.Efternamn</p>
+                            }
+                            <br>
+                            <p class="card-title">Deltagare:</p>
+                            @foreach (var deltagare in profileAndProject.Deltagare)
+                            {
+                                <p class="card-text"> @deltagare.Fornamn @deltagare.Efternamn</p>
+                            }
+
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#projectModal_@profileAndProject.Projekt.ProjectID">
+                                Visa Projekt
+                            </button>
+
+                            @if (User?.Identity != null && User.Identity.IsAuthenticated)
+                            {
+                                <button type="button" class="btn btn-primary" href="#" onclick="document.getElementById('JoinProject_@profileAndProject.Projekt.ProjectID').submit();"> Gå med i projekt</button>
+
+                                <button type="button" class="btn btn-primary" href="#" onclick="document.getElementById('LeaveProject_@profileAndProject.Projekt.ProjectID').submit();"> Lämna projekt</button>
+                            }
+
+                            <form id="JoinProject_@profileAndProject.Projekt.ProjectID" method="post" asp-controller="Project" asp-action="JoinProject">
+                                <input type="hidden" name="ProjectID" value="@profileAndProject.Projekt.ProjectID" />
+                            </form>
+
+                            <form id="LeaveProject_@profileAndProject.Projekt.ProjectID" method="post" asp-controller="Project" asp-action="LeaveProject">
+                                <input type="hidden" name="ProjectID" value="@profileAndProject.Projekt.ProjectID" />
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="projectModal_@profileAndProject.Projekt.ProjectID" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel_@profileAndProject.Projekt.ProjectID" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="projectModalLabel_@profileAndProject.Projekt.ProjectID">Projektinformation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p><strong>Projektnamn: </strong> @profileAndProject.Projekt.Title</p>
+                                    <p><strong>Beskrivning: </strong> @profileAndProject.Projekt.Description</p>
+                                    <br>
+                                    <p class="card-title">Skapare:</p>
+                                    @if (profileAndProject.Skapare.ArInaktiverad)
+                                    {
+                                        <p class="card-text">Inaktiverad användare</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="card-text">@profileAndProject.Skapare.Fornamn @profileAndProject.Skapare.Efternamn</p>
+                                    }
+                                    <br>
+                                    <p class="card-title">Deltagare:</p>
+                                    @foreach (var deltagare in profileAndProject.Deltagare)
+                                    {
+                                        <p class="card-text"> @deltagare.Fornamn @deltagare.Efternamn</p>
+                                    }
+                                </div>
+
+                                <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Stäng</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

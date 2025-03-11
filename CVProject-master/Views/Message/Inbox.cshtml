@@ -1,0 +1,89 @@
+﻿@model CVProject.Models.ViewModels.MessageGuestMessageViewModel;
+
+@{
+	ViewData["Title"] = "Inbox";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Läst</th>
+			<th>Datum</th>
+			<th>Avsändare</th>
+			<th>Innehåll</th>
+			<th>Radera</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var meddelande in Model.Messages)
+		{
+			if (!meddelande.ArRaderad && !meddelande.avsandare.ArInaktiverad)
+			{
+				<tr>
+					<td>
+						<form asp-action="MarkAsRead" asp-controller="Message" method="post">
+							<input type="hidden" name="messageId" value="@meddelande.Id" />
+							<input type="checkbox" @(meddelande.LasDatum ? "checked" : "") onchange="this.form.submit()" />
+						</form>
+					</td>
+					<td>@meddelande.Datum</td>
+					<td>@meddelande.avsandare?.UserName</td>
+					<td>@meddelande.Innehall</td>
+					<td>
+						<button class="btn btn-primary" onclick="showModal('@meddelande.Id')">Radera</button>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+	<tbody>
+		@foreach (var meddelande in Model.GuestMessages)
+		{
+			if (!meddelande.ArRaderad)
+			{
+				<tr>
+					<td>
+						<form asp-action="MarkAsRead" asp-controller="Message" method="post">
+							<input type="hidden" name="messageId" value="@meddelande.Id" />
+							<input type="checkbox" @(meddelande.LasDatum ? "checked" : "") onchange="this.form.submit()" />
+						</form>
+					</td>
+					<td>@meddelande.Datum</td>
+					<td>@meddelande.Avsandare</td>
+					<td>@meddelande.Innehall</td>
+					<td>
+						<button class="btn btn-primary" onclick="showModal('@meddelande.Id')">Radera</button>
+					</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
+
+<div id="myModal" class="modal" style="display: none;">
+	<form id="deleteForm" asp-action="MarkAsDeleted" asp-controller="Message" method="post">
+		<input type="hidden" name="messageId" id="modalMessageIdInput" />
+		<button type="button" class="btn btn-danger" onclick="deleteMessage()">Radera</button>
+	</form>
+	<label id="closeModal" class="btn btn-secondary" onclick="hideModal()">Avbryt</label>
+</div>
+
+<script>
+	function showModal(messageId) {
+		document.getElementById('modalMessageIdInput').value = messageId;
+		document.getElementById('myModal').style.display = 'block';
+	}
+
+	function hideModal() {
+		document.getElementById('myModal').style.display = 'none';
+		location.reload();
+	}
+
+	function deleteMessage() {
+		document.getElementById('deleteForm').submit();
+	}
+</script>
+
+

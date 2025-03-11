@@ -1,0 +1,72 @@
+﻿@model CVProject.Models.Repository.Entity.All_CV_Project
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- FontAwesome för ikoner -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="display-4">Välkommen</h2>
+
+        <div class="row">
+            @foreach (var cv in Model.CVs)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card mb-4" style="height: 400px; position: relative; overflow: hidden;">
+                @if (cv.Image != null)
+                {
+                    var base64 = Convert.ToBase64String(cv.Image.Image!);
+                    var imgSrc = $"data:image/gif;base64,{base64}";
+                    <img src="@imgSrc" class="card-img-top img-fluid rounded-circle" alt="Profilbild" style="height: 150px; width: 150px; margin-top: 10px; margin-left: 10px;" />
+
+                    <div class="card-body" style="position: absolute; bottom: 0; left: 0; width: 100%;">
+                        <h5 class="card-title">@cv.Profil.Fornamn @cv.Profil.Efternamn</h5>
+                        <p class="card-text">Kompetenser: @cv.Kompetenser</p>
+                        <p class="card-text">Utbildningar: @cv.Utbildningar</p>
+                        @using (Html.BeginForm("ShowSingleCVAndIncrement", "CV", cv, FormMethod.Post))
+                        {
+                            <button type="submit" class="btn btn-primary btn-block"  style="width: 60%">
+                                Visa CV
+                            </button>
+                        }
+                    </div>
+                }
+                else
+                {
+                   
+                    <i class="fas fa-user fa-5x text-secondary" style="height: 150px; width: 150px; margin-top: 40px; margin-left: 40px;"></i>
+
+                    <div class="card-body" style="position: absolute; bottom: 0; left: 0; width: 100%;">
+                        <h5 class="card-title">@cv.Profil.Fornamn @cv.Profil.Efternamn</h5>
+                        <p class="card-text">Kompetenser: @cv.Kompetenser</p>
+                        <p class="card-text">Utbildningar: @cv.Utbildningar</p>
+                        @using (Html.BeginForm("ShowSingleCVAndIncrement", "CV", cv, FormMethod.Post))
+                        {
+                                <button type="submit" class="btn btn-primary btn-block"  style="width: 60%">
+                                    Visa CV
+                                </button>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+            }
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"</script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"</script>
+</body>
+</html>

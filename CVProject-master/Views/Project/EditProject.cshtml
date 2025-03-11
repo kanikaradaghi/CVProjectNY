@@ -1,0 +1,40 @@
+﻿@model CVProject.Models.Repository.Entity.Project
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<h2>Redigera Projekt</h2>
+
+<form asp-action="EditProject" method="post" class="mt-4">
+<input type ="hidden" asp-for ="ProjectID"/>
+   
+        <div>
+            <label>Titel: </label>
+            <input type="text" asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div>
+            <label>Beskrivning: </label>
+            <input type="text" asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div>
+            <label>Start datum:</label>
+            @if (Model.DatumProjekt.HasValue)
+            {
+                <input asp-for="DatumProjekt" type="datetime-local" value="@Model.DatumProjekt.Value.ToString("yyyy-MM-ddTHH:mm")" />
+                
+            }
+            else
+            {
+               <p>Inget giltigt datum</p>
+            }
+        </div>
+    <button type="submit" class=" btn btn-primary mt-4">Uppdatera</button>
+</form>
+
+<footer>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+</footer>

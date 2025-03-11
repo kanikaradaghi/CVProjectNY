@@ -1,0 +1,66 @@
+﻿@model CVProject.Models.Repository.Entity.Profile
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<style>
+    div p {
+        font-size: 17px;
+    }
+
+    div a {
+        margin:4px;
+    }
+
+    img {
+        margin: 10px;
+    }
+</style>
+
+
+<h3 class="text-center">Profiluppgifter </h3>
+
+@if (Model != null)
+{
+    <form asp-action="ShowProfile" method="get">
+        <div>
+            @{
+                if (Model.Image != null)
+                {
+                    var base64 = Convert.ToBase64String(Model.Image.Image!);
+                    var imgSrc = $"data:image/gif;base64,{base64}";
+
+                    <img src="@imgSrc" alt="Profilbild1" class="rounded-circle" style="height: 250px; width: 250px;" />
+                }
+                else
+                {
+                    <p>Ingen profilbild tillgänglig.</p>
+                }
+            }
+        </div>
+    </form>
+
+    <div class="form-gruop">
+        <br />
+        <p>Användarnamn: @Model.Anvandarnamn</p>
+        <p>Namn: @Model.Fornamn @Model.Efternamn</p>
+        <p>E-postadress: @Model.Email</p>
+        <p>Telefonnummer: @Model.PhoneNumber</p>
+        <p>Adress: @Model.Adress</p>
+        @if (Model.Privat == true)
+        {
+            <p>Synlighetsstatus: Privat </p>
+        }
+        else
+        {
+            <p>Synlighetsstatus: Öppen </p>
+        }
+        <a href="@Url.Action("ShowCV", "CV")" class="btn btn-primary">Visa CV</a>
+        <a href="@Url.Action("CreateCV", "CV")" class="btn btn-primary">Skapa CV</a>
+        <br />
+        <a href="@Url.Action("ShowCreatedProject", "Project")" class="btn btn-primary">Mina projekt</a>
+        <a href="@Url.Action("CreateProject", "Project")" class="btn btn-primary">Skapa projekt</a>
+        <br />
+        <a href="@Url.Action("EditProfile", "Profile")" class="btn btn-primary">Ändra profiluppgifter</a>
+        <a class="btn btn-danger" href="#" onclick="document.getElementById('raderaForm').submit();">Radera konto</a>
+        <form id="raderaForm" method="post" asp-controller="Profile" asp-action="InactivateAccount"></form>
+    </div>
+}

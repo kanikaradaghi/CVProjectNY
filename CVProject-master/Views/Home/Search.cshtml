@@ -1,0 +1,53 @@
+﻿@using CVProject.Models.ViewModels
+@model List<SearchResultViewModel>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+     <div>
+    @{
+        if (Model == null || Model.Count < 1)
+        {
+            <h2>Hittade inga profiler</h2>
+        }
+        else
+        {
+            <h2>Sökresultat</h2>
+            foreach (var result in Model)
+            {
+                if (result.Profil.Image != null)
+                {
+                    var base64 = Convert.ToBase64String(result.Profil.Image.Image!);
+                    var imgSrc = $"data:image/gif;base64,{base64}";
+                    <img src="@imgSrc" alt="Profilbild" />
+                }
+                else
+                {
+                    <p>Ingen profilbild tillgänglig.</p>
+                }
+                <div>
+                    <label>Användarnamn: @result.Profil.Anvandarnamn</label>
+                </div>
+                <div>
+                    <label>Namn: @result.Profil.Fornamn @result.Profil.Efternamn</label>
+                </div>
+                <div>
+                    <label>Email: @result.Profil.Email</label>
+                </div>
+                <br/>
+                <div>
+                    @{
+                        foreach(var cv in result.CV)
+                        {
+                            <label>Kompetens: @cv.Kompetenser</label>
+                        }
+                    }
+                </div>
+                <br />
+                <button>
+                    <a asp-controller="Message" asp-action="SendMessage" asp-route-id="@result.Profil.Id" asp-route-username="@result.Profil.Anvandarnamn">Skicka meddelande här</a>
+                </button>
+                <br/>
+                <br/>
+            }
+        }
+    }
+    </div>

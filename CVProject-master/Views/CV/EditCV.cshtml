@@ -1,0 +1,51 @@
+﻿@model CVProject.Models.Repository.Entity.CVViewModel
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<h2>Ändra CV</h2>
+
+<form asp-action="EditCV" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <!-- Hidden input for CV-ID -->
+        <input type="hidden" asp-for="CV.Id" />
+
+        <label for="ImageFile">Bild:</label>
+        <input type="file" class="form-control-file" name="ImageFile" />
+        @if (Model.CV.BildData != null && Model.CV.BildData.Length > 0)
+        {
+            <img src="data:image/gif;base64,@Convert.ToBase64String(Model.CV.BildData)" alt="Nuvarande bild" class="img-fluid mt-2" />
+        }
+        else
+        {
+            <p class="mt-2">Ingen bild tillgänglig.</p>
+        }
+    </div>
+
+    <div class="form-group">
+        <label for="Kompetenser">Kompetenser:</label>
+        <input type="text" class="form-control" asp-for="CV.Kompetenser" />
+    </div>
+
+    <div class="form-group">
+        <label for="Utbildningar">Utbildningar:</label>
+        <input type="text" class="form-control" asp-for="CV.Utbildningar" />
+    </div>
+
+    <div class="form-group">
+        <label for="TidigareErfarenheter">Tidigare erfarenheter:</label>
+        <input type="text" class="form-control" asp-for="CV.TidigareErfarenheter" />
+    </div>
+
+    <div class="form-group">
+        <label for="SelectedProjectIds">Projekt du medverkat i:</label>
+        @foreach (var project in Model.Projects)
+        {
+            <div class="form-check">
+                <input type="checkbox" name="SelectedProjectIds" value="@project.ProjectID" class="form-check-input" />
+                <label class="form-check-label">@project.Title</label>
+            </div>
+        }
+        <input type="hidden" asp-for="SelectedProjectIds" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Uppdatera CV</button>
+</form>

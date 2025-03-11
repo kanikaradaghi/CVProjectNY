@@ -1,0 +1,61 @@
+﻿@model CVProject.Models.Repository.Entity.Profile
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+<div class="container mt-5">
+    <h2 class="text-center">Ändra Profiluppgifter</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-action="Update" method="post">
+                <div class="form-group">
+                    <label for="Anvandarnamn">Användarnamn:</label>
+                    <input type="text" class="form-control" value="@Model.Anvandarnamn" disabled />
+                </div>
+
+                <div class="form-group">
+                    <label for="Fornamn">Förnamn:</label>
+                    <input type="text" class="form-control" asp-for="Fornamn" />
+                    <span asp-validation-for="Fornamn" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Efternamn">Efternamn:</label>
+                    <input type="text" class="form-control" asp-for="Efternamn" />
+                    <span asp-validation-for="Efternamn" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="Losenord">Lösenord:</label>
+                    <input type="password" class="form-control" asp-for="Losenord" />
+                    <span asp-validation-for="Losenord" class="text-danger"></span>
+                </div>
+
+                <!-- Add other form groups for Email, PhoneNumber, Adress, Privat, etc. -->
+
+                <div class="form-group">
+                    <label>Synlighetsstatus:</label>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" asp-for="Privat" value="true" />
+                        <label class="form-check-label">Privat</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" class="form-check-input" asp-for="Privat" value="false" />
+                        <label class="form-check-label">Öppen</label>
+                    </div>
+                    <span asp-validation-for="Privat" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Spara</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+</footer>

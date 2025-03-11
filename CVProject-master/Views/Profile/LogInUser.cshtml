@@ -1,0 +1,30 @@
+﻿@model CVProject.Models.Repository.Entity.Profile
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+@if (TempData.ContainsKey("FelMeddelande"))
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["FelMeddelande"]
+    </div>
+}
+
+<div class="container login-container">
+    <h2 class="text-center">Logga in</h2>
+
+    <div class="login-form col-md-6 mx-auto">
+        <form asp-action="LogInUser" method="post">
+            <div class="form-group">
+                <label for="Anvandarnamn">Användarnamn:</label>
+                <input type="text" class="form-control" asp-for="Anvandarnamn" />
+            </div>
+            <div class="form-group">
+                <label for="Losenord">Lösenord:</label>
+                <input type="password" class="form-control" asp-for="Losenord" />
+            </div>
+            <button type="submit" class="btn btn-primary">Logga in</button>
+        </form>
+    </div>
+</div>

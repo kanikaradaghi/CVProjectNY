@@ -1,0 +1,46 @@
+﻿@model CVProject.Models.Repository.Entity.CVViewModel
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+<div class="modal-content">
+    <div class="modal-header">
+     
+        <h5 class="modal-title">Curriculum Vitae</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        @if (Model.CV.Image != null)
+        {
+            var base64 = Convert.ToBase64String(Model.CV.Image.Image!);
+            var imgSrc = $"data:image/gif;base64,{base64}";
+            <img src="@imgSrc" class="card-img-top img-fluid rounded-circle" alt="Profilbild" style="height: 150px; width: 150px; margin-top: 10px; margin-left: 10px; margin-bottom: 20px" />
+        }
+        else
+        {
+            <i class="fas fa-user fa-5x text-secondary" style="height: 150px; width: 150px; margin-top: 40px; margin-left: 40px;"></i>
+        }
+
+        <p><strong>Förnamn: </strong> @Model.CV.Profil.Fornamn @Model.CV.Profil.Efternamn</p>
+        <p><strong>E-postadress: </strong> @Model.CV.Profil.Email</p>
+        <br>
+        <p><strong>Kompetenser: </strong> @Model.CV.Kompetenser</p>
+        <p><strong>Utbildningar: </strong> @Model.CV.Utbildningar</p>
+        <p><strong>Tidigare Erfarenheter: </strong> @Model.CV.TidigareErfarenheter</p>
+        <br>
+        <p><strong>Projekt:</strong> </p>
+        @foreach (var project in Model.Projects)
+        {
+            <li>@project.Title</li>
+        }
+    </div>
+
+    <div class="modal-footer">
+        <a href="@Url.Action("ShowSimilarCV", "CV", new { id = Model.CV.Profil.Id })" class="btn btn-primary">Liknande CV:en</a>
+        <a href="@Url.Action("ShowProfileOtherUser", "Profile", new { id = Model.CV.Profil.Id })" class="btn btn-primary">Visa Profil</a>
+        <a href="@Url.Action("SendMessage", "Message", new { id = Model.CV.Profil.Id, username = Model.CV.Profil.UserName })" class="btn btn-primary">Skicka meddelande</a>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Stäng</a>
+    </div>
+</div>

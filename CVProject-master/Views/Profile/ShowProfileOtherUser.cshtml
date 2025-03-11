@@ -1,0 +1,40 @@
+﻿@model CVProject.Models.Repository.Entity.Profile
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<style>
+    div p {
+        font-size: 17px;
+        margin-bottom: 5px;
+    }
+
+    div a {
+        margin: 4px;
+    }
+
+    img {
+        margin: 10px;
+    }
+
+    .form--group {
+        margin-top: 20px;
+    }
+
+    .btn-group {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container mt-5">
+    <h3 class="text-center">Profiluppgifter:</h3>
+
+    <div class="form--group">
+        <p>Namn: @Model.Fornamn @Model.Efternamn</p>
+        <p>E-postadress: @Model.Email</p>
+        <p>Telefonnummer: @Model.PhoneNumber</p>
+        <p>Adress: @Model.Adress</p>
+
+        <div class="btn-group">
+            <a href="@Url.Action("ShowCVOtherUser", "CV", new { @Model.Id })" class="btn btn-primary">Visa CVn</a>
+        </div>
+    </div>
+</div>

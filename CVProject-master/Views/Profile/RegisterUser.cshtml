@@ -1,0 +1,82 @@
+﻿@model CVProject.Models.Repository.Entity.Profile
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Bootstrap CSS -->
+    <title>Registration</title>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Registrera användare</h2>
+
+        <form asp-action="Register" method="post" enctype="multipart/form-data" class="mx-auto col-md-6">
+            <div class="form-group">
+                <label for="Anvandarnamn">Användarnamn:</label>
+                <input type="text" class="form-control" asp-for="Anvandarnamn" />
+                <span asp-validation-for="Anvandarnamn" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="Fornamn">Förnamn:</label>
+                <input type="text" class="form-control" asp-for="Fornamn" />
+                <span asp-validation-for="Fornamn" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="Efternamn">Efternamn:</label>
+                <input type="text" class="form-control" asp-for="Efternamn" />
+                <span asp-validation-for="Efternamn" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="Losenord">Lösenord:</label>
+                <input type="password" class="form-control" asp-for="Losenord" />
+                <span asp-validation-for="Losenord" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="Email">E-postadress:</label>
+                <input type="email" class="form-control" asp-for="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="PhoneNumber">Telefonnummer:</label>
+                <input type="text" class="form-control" asp-for="PhoneNumber" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="Adress">Adress:</label>
+                <input type="text" class="form-control" asp-for="Adress" />
+                <span asp-validation-for="Adress" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Synlighetsstatus:</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" asp-for="Privat" value="true" />
+                    <label class="form-check-label">Privat</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" asp-for="Privat" value="false" />
+                    <label class="form-check-label">Öppen</label>
+                </div>
+                <span asp-validation-for="Privat" class="text-danger"></span>
+            </div>
+            <div>
+                <label>Profilbild: </label>
+                <input type="file" name="ImageFile" /> 
+            </div>
+            <br />
+
+            <button type="submit" class="btn btn-primary">Registrera</button>
+        </form>
+    </div>
+
+</body>
+</html>
