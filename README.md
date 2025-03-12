@@ -1,0 +1,3 @@
+CV-siten är en webbaserad applikation utvecklad med ASP.NET MVC och SQL Server. Målet är att skapa en plattform där användare kan hantera sina CV:n, projekt och kontaktuppgifter på ett dynamiskt och strukturerat sätt.
+
+CV-siten låter användare registrera sig, logga in och hantera sin profil. De kan skapa och redigera sitt CV med information om utbildning, erfarenhet och kompetenser samt koppla sig till olika projekt. Användare kan anpassa synligheten för sin profil, skicka och ta emot meddelanden samt söka efter andra användare och kompetenser. All information lagras och hanteras säkert i en SQL Server-databas.
